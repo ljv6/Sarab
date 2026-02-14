@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سراب | SARAB - أسياد القلم</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --gold: #c5a059; --dark: #0f172a; --bg-light: #fdfdfd; }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-light); color: var(--dark); transition: 0.5s; margin: 0; }
+        .amiri { font-family: 'Amiri', serif; }
+
+        /* شاشة التحميل المطورة */
+        #loader { 
+            position: fixed; inset: 0; z-index: 999; 
+            background: white; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; transition: 0.8s ease; 
+        }
+        .animate-line { width: 0%; height: 2px; background: var(--gold); animation: load 1.5s forwards; }
+        @keyframes load { to { width: 200px; } }
+
+        /* ستايل البطاقات */
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(197, 160, 89, 0.2); }
+        .product-card:hover img { transform: scale(1.05) rotate(1deg); }
+        
+        /* البانر الرئيسي */
+        .hero-gradient { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1511376979163-f804dff7ad7b?q=80&w=1500'); background-size: cover; background-position: center; }
+
+        /* الوضع الداكن */
+        body.dark-mode { background: #020617; color: #f8fafc; }
+        .dark-mode #loader { background: #020617; }
+        .dark-mode .glass-card { background: rgba(30, 41, 59, 0.5); border-color: rgba(197, 160, 89, 0.1); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="loader">
+        <h1 class="text-4xl font-black tracking-[0.5em] text-[#c5a059] mb-4">SARAB</h1>
+        <div class="animate-line"></div>
+    </div>
+
+    <nav class="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border-b border-gray-100 dark:border-slate-800">
+        <div class="text-2xl font-black tracking-tighter text-[#c5a059]">S A R A B</div>
+        <div class="flex items-center gap-5">
+            <button onclick="toggleDarkMode()" class="text-xl">🌓</button>
+            <div class="h-6 w-[1px] bg-gray-200"></div>
+            <div class="relative cursor-pointer text-xl">🛒</div>
+        </div>
+    </nav>
+
+    <section class="hero-gradient h-[85vh] flex items-center justify-center text-center text-white px-4">
+        <div class="max-w-3xl">
+            <span class="inline-block px-4 py-1 border border-[#c5a059] text-[#c5a059] text-xs tracking-widest mb-6 rounded-full">EST. 2026</span>
+            <h2 class="text-5xl md:text-7xl font-black mb-6 amiri italic">حيثُ تنتهي الحكاية.. ويبدأ القلم</h2>
+            <p class="text-lg md:text-xl font-light opacity-90 mb-10 leading-relaxed">في "سراب" نؤمن أن القلم ليس مجرد أداة، بل هو امتداد لشخصيتك، وبصمة تتركها في سجل التاريخ.</p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="#store" class="bg-[#c5a059] hover:bg-[#a38445] text-white px-10 py-4 rounded-full font-bold transition-all shadow-xl">تسوق المجموعة</a>
+                <a href="#story" class="backdrop-blur-md bg-white/10 border border-white/20 hover:bg-white/20 px-10 py-4 rounded-full font-bold transition-all">اكتشف أسطورتنا</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="story" class="py-24 px-6">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16">
+            <div class="w-full md:w-1/2 relative">
+                <div class="absolute -top-4 -right-4 w-full h-full border-2 border-[#c5a059] rounded-2xl"></div>
+                <img src="https://images.unsplash.com/photo-1569012871812-f38ee64cd54c?q=80&w=800" class="relative rounded-2xl shadow-2xl z-10">
+            </div>
+            <div class="w-full md:w-1/2">
+                <h3 class="text-3xl font-black mb-6 amiri italic text-[#c5a059]">لماذا سراب؟</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-loose text-lg italic amiri">
+                    "السراب في الصحراء هو الجمال الذي تطارده العيون، ونحن في سراب نصنع الجمال الذي تستقر عليه الأيادي. اخترنا خاماتنا من أصلب المعادن وأندر الأخشاب، لتمتزج في قلم واحد يحكي قصة نجاحك في كل توقيع."
+                </p>
+                <div class="mt-8 flex gap-8">
+                    <div><span class="block text-2xl font-black text-[#c5a059]">+50</span><span class="text-xs text-gray-400">تصميم يدوي</span></div>
+                    <div><span class="block text-2xl font-black text-[#c5a059]">100%</span><span class="text-xs text-gray-400">ضمان دولي</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="store" class="py-20 bg-gray-50 dark:bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h3 class="text-3xl font-black mb-2">المجموعة المختارة</h3>
+                <div class="w-16 h-1 bg-[#c5a059] mx-auto"></div>
+            </div>
+
+            <div id="products-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="glass-card product-card group p-4 rounded-[2rem] transition-all hover:-translate-y-2 cursor-pointer" onclick="openModal('قلم الأبنوس المذهب', '350', 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?q=80&w=500')">
+                    <div class="relative overflow-hidden rounded-[1.5rem] mb-6 aspect-square">
+                        <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?q=80&w=500" class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="px-2">
+                        <h4 class="font-black text-lg mb-1">قلم الأبنوس المذهب</h4>
+                        <p class="text-[#c5a059] font-bold">350.00 ر.س</p>
+                    </div>
+                </div>
+
+                <div class="glass-card product-card group p-4 rounded-[2rem] transition-all hover:-translate-y-2 cursor-pointer" onclick="openModal('إصدار الفضة المصقولة', '420', 'https://images.unsplash.com/photo-1569012871812-f38ee64cd54c?q=80&w=500')">
+                    <div class="relative overflow-hidden rounded-[1.5rem] mb-6 aspect-square">
+                        <img src="https://images.unsplash.com/photo-1569012871812-f38ee64cd54c?q=80&w=500" class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="px-2">
+                        <h4 class="font-black text-lg mb-1">إصدار الفضة المصقولة</h4>
+                        <p class="text-[#c5a059] font-bold">420.00 ر.س</p>
+                    </div>
+                </div>
+
+                <div class="glass-card product-card group p-4 rounded-[2rem] transition-all hover:-translate-y-2 cursor-pointer" onclick="openModal('قلم سراب الكربوني', '290', 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=500')">
+                    <div class="relative overflow-hidden rounded-[1.5rem] mb-6 aspect-square">
+                        <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=500" class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="px-2">
+                        <h4 class="font-black text-lg mb-1">قلم سراب الكربوني</h4>
+                        <p class="text-[#c5a059] font-bold">290.00 ر.س</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 p-4 backdrop-blur-md">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-4xl rounded-[2.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl">
+            <div class="w-full md:w-1/2 h-[300px] md:h-auto">
+                <img id="m-img" src="" class="w-full h-full object-cover">
+            </div>
+            <div class="w-full md:w-1/2 p-10 relative">
+                <button onclick="closeModal()" class="absolute top-6 left-6 text-gray-400 hover:text-black">✕</button>
+                <h3 id="m-title" class="text-3xl font-black mb-2"></h3>
+                <p id="m-price" class="text-2xl font-bold text-[#c5a059] mb-8"></p>
+                <div class="space-y-4 mb-8">
+                    <div class="flex items-center gap-3 text-sm"><span class="text-green-500">✔</span> حفر مجاني للإسم بالليزر</div>
+                    <div class="flex items-center gap-3 text-sm"><span class="text-green-500">✔</span> علبة جلدية فاخرة</div>
+                    <div class="flex items-center gap-3 text-sm"><span class="text-green-500">✔</span> ضمان لمدة عامين</div>
+                </div>
+                <input type="tel" id="tel" placeholder="رقم الواتساب الخاص بك" class="w-full p-4 bg-gray-50 dark:bg-slate-800 rounded-2xl mb-4 border-none outline-none focus:ring-2 focus:ring-[#c5a059]">
+                <button onclick="order()" class="w-full bg-[#c5a059] text-white py-4 rounded-2xl font-bold hover:scale-[1.02] transition-all shadow-lg shadow-[#c5a059]/20">تأكيد الطلب</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-16 px-6 bg-white dark:bg-slate-950 text-center border-t border-gray-100 dark:border-slate-900">
+        <h2 class="text-3xl font-black text-[#c5a059] mb-6">SARAB</h2>
+        <p class="text-gray-400 text-sm mb-10 tracking-widest uppercase italic">Mastery in every stroke</p>
+        <p class="text-xs text-gray-500">&copy; 2026 سراب - جميع الحقوق محفوظة</p>
+    </footer>
+
+    <script>
+        // إغلاق شاشة التحميل بعد ثانية واحدة لضمان عدم بقائها بيضاء
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 800);
+            }, 1000);
+        });
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function openModal(title, price, img) {
+            document.getElementById('m-title').innerText = title;
+            document.getElementById('m-price').innerText = price + " ر.س";
+            document.getElementById('m-img').src = img;
+            document.getElementById('modal').classList.replace('hidden', 'flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.replace('flex', 'hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function order() {
+            const phone = document.getElementById('tel').value;
+            if(!phone) return alert('لطفاً أدخل رقم الجوال');
+            alert('شكراً لثقتك بـ سراب. سيتم التواصل معك عبر واتساب لتأكيد النقش على القلم.');
+            closeModal();
+        }
+    </script>
+</body>
+</html>
