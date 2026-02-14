@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر سراب | إرث يكتبه التاريخ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS مخصص للهوية البصرية لـ سراب */
+        body { 
+            font-family: 'Tajawal', sans-serif; 
+            background-color: #ffffff; 
+            color: #1a1a1a; 
+            overflow-x: hidden; 
+            transition: background 0.4s, color 0.4s; 
+        }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+
+        /* شاشة التحميل الذكية */
+        #loader { 
+            position: fixed; inset: 0; z-index: 200; 
+            display: flex; flex-direction: column; items-center: center; justify-content: center; 
+            transition: opacity 0.8s ease-in-out; 
+            background: #fff;
+        }
+        .dark-mode #loader { background: #0f172a; }
+        
+        @keyframes loading-bar { 0% { width: 0; } 50% { width: 150px; } 100% { width: 0; } }
+        .animate-bar { animation: loading-bar 2s infinite ease-in-out; height: 2px; background-color: #c5a059; margin-top: 20px; }
+
+        /* الوضع الداكن الفاخر */
+        body.dark-mode { background-color: #0f172a; color: #f8fafc; }
+        .dark-mode nav { background-color: #1e293b; border-color: #334155; }
+        .dark-mode .bg-gray-50 { background-color: #111827; }
+        .dark-mode .product-card { background-color: #1e293b; border-color: #334155; }
+
+        /* قصة البراند (Font) */
+        .story-text { font-family: 'Amiri', serif; line-height: 2; }
+
+        /* السلايدر الرئيسي */
+        #banner-slider { display: flex; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); height: 80vh; }
+        .banner-slide { min-width: 100%; position: relative; background: #000; overflow: hidden; }
+        .banner-slide img { opacity: 0.6; width: 100%; height: 100%; object-fit: cover; }
+        
+        .dot-item { transition: all 0.4s ease; width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+        .dot-item.active { width: 30px; border-radius: 10px; background-color: #c5a059 !important; }
+
+        /* نافذة المنتج */
+        #paymentModal { display: none; opacity: 0; transition: opacity 0.3s ease; }
+        #paymentModal.active { display: flex; opacity: 1; }
+
+        /* تأثيرات الأزرار */
+        .btn-gold { background: #c5a059; color: white; transition: all 0.3s; }
+        .btn-gold:hover { background: #a38445; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2); }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="loader">
+        <div class="relative flex flex-col items-center">
+            <h1 class="text-4xl font-black tracking-[0.4em] text-[#c5a059]">SARAB</h1>
+            <p class="text-xs mt-2 tracking-widest text-gray-400">فخامة تليق بك</p>
+            <div class="animate-bar"></div>
+        </div>
+    </div>
+
+    <nav class="flex items-center justify-between px-8 py-5 border-b border-gray-50 sticky top-0 bg-white/80 backdrop-blur-md z-50 transition-all dark:bg-slate-900/80">
+        <div class="flex items-center gap-8">
+            <h1 class="text-2xl font-black tracking-[0.2em] cursor-pointer text-[#c5a059]">SARAB</h1>
+            <div class="hidden md:flex gap-6 text-sm font-medium">
+                <a href="#" class="hover:text-[#c5a059] transition-all">الرئيسية</a>
+                <a href="#products" class="hover:text-[#c5a059] transition-all">المتجر</a>
+                <a href="#story" class="hover:text-[#c5a059] transition-all">حكاية سراب</a>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <button onclick="toggleDarkMode()" id="darkModeBtn" class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 transition-all">🌙</button>
+            <div class="relative cursor-pointer text-xl">🛒</div>
+        </div>
+    </nav>
+
+    <section class="relative overflow-hidden">
+        <div id="banner-slider">
+            </div>
+        <div id="slider-dots" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10"></div>
+    </section>
+
+    <section id="story" class="px-6 py-20 bg-white dark:bg-slate-900 overflow-hidden">
+        <div class="max-w-4xl mx-auto text-center relative">
+            <span class="text-[#c5a059] font-bold tracking-widest text-sm mb-4 block">خلف كل حرف حكاية</span>
+            <h2 class="text-3xl md:text-5xl font-black mb-8 dark:text-white">أسطورة سراب</h2>
+            <p class="story-text text-xl text-gray-600 dark:text-gray-300 italic">
+                "يُحكى أن سراب لم تبدأ في المصانع، بل بدأت برؤيا في قلب الصحراء، حيث كان الضوء يراقص الرمال ليخلق وهماً من الجمال. استلهمنا من ذلك السحر أقلامنا؛ لتكون كالسّراب في جذب الأنظار، لكنها كالجبل في ثبات الجودة. صُممت أقلام سراب للرجل الذي لا يكتفي بالنجاح، بل يطمح لترك أثر لا يمحوه الزمن."
+            </p>
+            <div class="mt-10 flex justify-center gap-4">
+                <div class="w-12 h-[1px] bg-[#c5a059] self-center"></div>
+                <span class="text-sm font-bold uppercase tracking-widest text-[#c5a059]">Sarab Executive Pens</span>
+                <div class="w-12 h-[1px] bg-[#c5a059] self-center"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="px-6 py-16 bg-gray-50 dark:bg-slate-800 transition-all">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h3 class="text-2xl font-black dark:text-white">مجموعة النخبة</h3>
+                    <p class="text-sm text-gray-500 mt-2">أقلام رجالية رسمية لإطلالة متكاملة</p>
+                </div>
+                <div class="flex gap-2">
+                    <button class="px-4 py-2 bg-white dark:bg-slate-700 rounded-lg text-xs font-bold shadow-sm">الكل</button>
+                    <button class="px-4 py-2 hover:bg-white dark:hover:bg-slate-700 rounded-lg text-xs font-bold transition-all">كلاسيك</button>
+                    <button class="px-4 py-2 hover:bg-white dark:hover:bg-slate-700 rounded-lg text-xs font-bold transition-all">حديث</button>
+                </div>
+            </div>
+            
+            <div id="products-list" class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                </div>
+        </div>
+    </section>
+
+    <section class="px-6 py-20 bg-white dark:bg-slate-900">
+        <div class="max-w-6xl mx-auto text-center mb-12">
+            <h3 class="text-2xl font-black mb-2 dark:text-white">قالوا عن سراب</h3>
+            <div class="w-20 h-1 bg-[#c5a059] mx-auto"></div>
+        </div>
+        <div class="flex overflow-x-auto gap-6 no-scrollbar pb-4">
+            <div class="min-w-[300px] bg-gray-50 dark:bg-slate-800 p-8 rounded-2xl border border-gray-100 dark:border-slate-700">
+                <p class="text-gray-600 dark:text-gray-300 italic mb-6">"وصلني القلم في تغليف ملكي، التفاصيل في قلم 'السراب الأسود' مذهلة وتضيف هيبة للمكتب."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-[#c5a059] rounded-full flex items-center justify-center text-white font-bold">ع.م</div>
+                    <div class="text-right">
+                        <h4 class="text-sm font-bold dark:text-white">عبدالعزيز محمد</h4>
+                        <p class="text-[10px] text-gray-400">مدير تنفيذي</p>
+                    </div>
+                </div>
+            </div>
+            <div class="min-w-[300px] bg-gray-50 dark:bg-slate-800 p-8 rounded-2xl border border-gray-100 dark:border-slate-700">
+                <p class="text-gray-600 dark:text-gray-300 italic mb-6">"أفضل هدية قدمتها لنفسي. سلاسة الخط وشكل القلم الخشبي يعطي شعور بالفخامة التاريخية."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-[#c5a059] rounded-full flex items-center justify-center text-white font-bold">ف.س</div>
+                    <div class="text-right">
+                        <h4 class="text-sm font-bold dark:text-white">فهد السالم</h4>
+                        <p class="text-[10px] text-gray-400">مهندس معماري</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="paymentModal" class="fixed inset-0 z-[100] bg-black/80 items-end md:items-center justify-center backdrop-blur-sm p-0 md:p-4">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-t-[2rem] md:rounded-[2rem] overflow-hidden relative shadow-2xl">
+            <button onclick="closeModal()" class="absolute top-5 left-5 z-10 bg-black/10 p-2 rounded-full text-black hover:bg-black/20 transition-all">✕</button>
+            <div class="flex flex-col md:flex-row">
+                <div class="w-full md:w-1/2 bg-gray-100 dark:bg-slate-800 aspect-square">
+                    <img id="modalImg" src="" class="w-full h-full object-cover">
+                </div>
+                <div class="w-full md:w-1/2 p-8">
+                    <h2 id="modalProdName" class="text-2xl font-black mb-2 dark:text-white"></h2>
+                    <p class="text-xs text-[#c5a059] font-bold mb-4">إصدار حصري للنخبة</p>
+                    <div class="mb-6">
+                        <p class="text-3xl font-black text-gray-900 dark:text-[#c5a059]" id="modalPriceDisplay"></p>
+                    </div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-6">
+                        صُنع هذا القلم بمزيج من التكنولوجيا الحديثة والحرفية اليدوية. يتميز بتوازن مثالي في اليد لضمان راحة تامة أثناء توقيع أهم قراراتك.
+                    </p>
+                    <input type="tel" id="phone" placeholder="رقم الجوال لتأكيد الطلب" class="w-full p-4 rounded-xl bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-slate-700 mb-4 outline-none focus:ring-2 focus:ring-[#c5a059]">
+                    <button onclick="alert('سيتم تحويلك لبوابة الدفع قريباً')" class="w-full btn-gold py-4 rounded-xl font-bold shadow-lg">اطلب الآن</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black text-white py-12 px-8 text-center">
+        <h2 class="text-3xl font-black tracking-[0.5em] text-[#c5a059] mb-4">SARAB</h2>
+        <p class="text-gray-500 text-sm max-w-md mx-auto mb-8">نحن لا نبيع أقلاماً، نحن نبيع وسيلة لكتابة التاريخ.</p>
+        <div class="flex justify-center gap-6 text-xs font-bold tracking-widest text-gray-400">
+            <a href="#" class="hover:text-white transition-all">INSTAGRAM</a>
+            <a href="#" class="hover:text-white transition-all">TWITTER</a>
+            <a href="#" class="hover:text-white transition-all">WHATSAPP</a>
+        </div>
+    </footer>
+
+    <script>
+        // --- البيانات ---
+        const banners = [
+            { image: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?q=80&w=2000', title: 'فخامة بلا حدود', subtitle: 'مجموعة سراب 2026 الرسمية' },
+            { image: 'https://images.unsplash.com/photo-1569012871812-f38ee64cd54c?q=80&w=2000', title: 'اكتب مستقبلك', subtitle: 'أقلام صُممت للقيادة' },
+            { image: 'https://images.unsplash.com/photo-1511376979163-f804dff7ad7b?q=80&w=2000', title: 'لمسة ملكية', subtitle: 'إصدارات خاصة من الذهب والفضة' }
+        ];
+
+        const products = [
+            { name: 'قلم سراب الكلاسيكي', price: 299, img: 'https://images.unsplash.com/photo-1511376979163-f804dff7ad7b?q=80&w=500' },
+            { name: 'إصدار الرمال الذهبي', price: 450, img: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?q=80&w=500' },
+            { name: 'قلم الفخامة الأسود', price: 320, img: 'https://images.unsplash.com/photo-1569012871812-f38ee64cd54c?q=80&w=500' },
+            { name: 'قلم التوقيع الرصاصي', price: 280, img: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=500' }
+        ];
+
+        // --- إدارة السلايدر ---
+        let currentSlide = 0;
+        const slider = document.getElementById('banner-slider');
+        const dotsContainer = document.getElementById('slider-dots');
+
+        function initSlider() {
+            slider.innerHTML = banners.map(b => `
+                <div class="banner-slide">
+                    <img src="${b.image}">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
+                        <span class="text-[#c5a059] font-bold tracking-[0.3em] mb-4 text-sm md:text-base">${b.subtitle}</span>
+                        <h2 class="text-4xl md:text-7xl font-black mb-6 uppercase tracking-tight">${b.title}</h2>
+                        <button class="btn-gold px-10 py-4 rounded-full font-bold text-sm">اكتشف المجموعة</button>
+                    </div>
+                </div>
+            `).join('');
+            dotsContainer.innerHTML = banners.map((_, i) => `<div onclick="goToSlide(${i})" class="dot-item bg-white/30 cursor-pointer"></div>`).join('');
+            updateSlider();
+        }
+
+        function updateSlider() {
+            slider.style.transform = `translateX(${currentSlide * 100}%)`;
+            document.querySelectorAll('.dot-item').forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
+        }
+        function goToSlide(index) { currentSlide = index; updateSlider(); }
+        setInterval(() => { currentSlide = (currentSlide + 1) % banners.length; updateSlider(); }, 5000);
+
+        // --- عرض المنتجات ---
+        function renderProducts() {
+            const container = document.getElementById('products-list');
+            container.innerHTML = products.map(p => `
+                <div class="product-card bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 rounded-3xl overflow-hidden cursor-pointer hover:shadow-2xl transition-all group" 
+                     onclick="openModal('${p.name}', '${p.price}', '${p.img}')">
+                    <div class="aspect-square overflow-hidden bg-gray-50 relative">
+                        <img src="${p.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <div class="absolute top-4 right-4 bg-white/90 px-3 py-1 rounded-full text-[10px] font-bold dark:text-black">جديد</div>
+                    </div>
+                    <div class="p-6">
+                        <h5 class="text-sm font-black mb-1 dark:text-gray-100">${p.name}</h5>
+                        <p class="text-[#c5a059] font-black text-lg">${p.price} SAR</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- التحكم بالنافذة ---
+        function openModal(name, price, img) {
+            document.getElementById('modalProdName').innerText = name;
+            document.getElementById('modalPriceDisplay').innerText = price + " SAR";
+            document.getElementById('modalImg').src = img;
+            document.getElementById('paymentModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // --- الوضع الداكن ---
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('darkModeBtn').innerText = isDark ? '☀️' : '🌙';
+        }
+
+        // --- بدء التشغيل ---
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 800);
+            }, 1000);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initSlider();
+            renderProducts();
+        });
+    </script>
+</body>
+</html>
