@@ -3,268 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر سراب | إرث يكتبه التاريخ</title>
+    <title>سراب | SARAB - أسياد القلم</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;500;700;900&display=swap" rel="stylesheet">
     <style>
-        /* CSS مخصص للهوية البصرية لـ سراب */
-        body { 
-            font-family: 'Tajawal', sans-serif; 
-            background-color: #ffffff; 
-            color: #1a1a1a; 
-            overflow-x: hidden; 
-            transition: background 0.4s, color 0.4s; 
-        }
-        
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        :root { --gold: #c5a059; --dark: #0f172a; --bg-light: #fdfdfd; }
+        body { font-family: 'Tajawal', sans-serif; background-color: var(--bg-light); color: var(--dark); transition: 0.5s; margin: 0; }
+        .amiri { font-family: 'Amiri', serif; }
 
-        /* شاشة التحميل الذكية */
+        /* شاشة التحميل المطورة */
         #loader { 
-            position: fixed; inset: 0; z-index: 200; 
-            display: flex; flex-direction: column; items-center: center; justify-content: center; 
-            transition: opacity 0.8s ease-in-out; 
-            background: #fff;
+            position: fixed; inset: 0; z-index: 999; 
+            background: white; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; transition: 0.8s ease; 
         }
-        .dark-mode #loader { background: #0f172a; }
+        .animate-line { width: 0%; height: 2px; background: var(--gold); animation: load 1.5s forwards; }
+        @keyframes load { to { width: 200px; } }
+
+        /* ستايل البطاقات */
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(197, 160, 89, 0.2); }
+        .product-card:hover img { transform: scale(1.05) rotate(1deg); }
         
-        @keyframes loading-bar { 0% { width: 0; } 50% { width: 150px; } 100% { width: 0; } }
-        .animate-bar { animation: loading-bar 2s infinite ease-in-out; height: 2px; background-color: #c5a059; margin-top: 20px; }
+        /* البانر الرئيسي */
+        .hero-gradient { background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1511376979163-f804dff7ad7b?q=80&w=1500'); background-size: cover; background-position: center; }
 
-        /* الوضع الداكن الفاخر */
-        body.dark-mode { background-color: #0f172a; color: #f8fafc; }
-        .dark-mode nav { background-color: #1e293b; border-color: #334155; }
-        .dark-mode .bg-gray-50 { background-color: #111827; }
-        .dark-mode .product-card { background-color: #1e293b; border-color: #334155; }
-
-        /* قصة البراند (Font) */
-        .story-text { font-family: 'Amiri', serif; line-height: 2; }
-
-        /* السلايدر الرئيسي */
-        #banner-slider { display: flex; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); height: 80vh; }
-        .banner-slide { min-width: 100%; position: relative; background: #000; overflow: hidden; }
-        .banner-slide img { opacity: 0.6; width: 100%; height: 100%; object-fit: cover; }
-        
-        .dot-item { transition: all 0.4s ease; width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); }
-        .dot-item.active { width: 30px; border-radius: 10px; background-color: #c5a059 !important; }
-
-        /* نافذة المنتج */
-        #paymentModal { display: none; opacity: 0; transition: opacity 0.3s ease; }
-        #paymentModal.active { display: flex; opacity: 1; }
-
-        /* تأثيرات الأزرار */
-        .btn-gold { background: #c5a059; color: white; transition: all 0.3s; }
-        .btn-gold:hover { background: #a38445; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(197, 160, 89, 0.2); }
+        /* الوضع الداكن */
+        body.dark-mode { background: #020617; color: #f8fafc; }
+        .dark-mode #loader { background: #020617; }
+        .dark-mode .glass-card { background: rgba(30, 41, 59, 0.5); border-color: rgba(197, 160, 89, 0.1); }
     </style>
 </head>
 <body class="antialiased">
 
     <div id="loader">
-        <div class="relative flex flex-col items-center">
-            <h1 class="text-4xl font-black tracking-[0.4em] text-[#c5a059]">SARAB</h1>
-            <p class="text-xs mt-2 tracking-widest text-gray-400">فخامة تليق بك</p>
-            <div class="animate-bar"></div>
-        </div>
+        <h1 class="text-4xl font-black tracking-[0.5em] text-[#c5a059] mb-4">SARAB</h1>
+        <div class="animate-line"></div>
     </div>
 
-    <nav class="flex items-center justify-between px-8 py-5 border-b border-gray-50 sticky top-0 bg-white/80 backdrop-blur-md z-50 transition-all dark:bg-slate-900/80">
-        <div class="flex items-center gap-8">
-            <h1 class="text-2xl font-black tracking-[0.2em] cursor-pointer text-[#c5a059]">SARAB</h1>
-            <div class="hidden md:flex gap-6 text-sm font-medium">
-                <a href="#" class="hover:text-[#c5a059] transition-all">الرئيسية</a>
-                <a href="#products" class="hover:text-[#c5a059] transition-all">المتجر</a>
-                <a href="#story" class="hover:text-[#c5a059] transition-all">حكاية سراب</a>
-            </div>
-        </div>
-        <div class="flex items-center gap-4">
-            <button onclick="toggleDarkMode()" id="darkModeBtn" class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 transition-all">🌙</button>
+    <nav class="sticky top-0 z-50 flex items-center justify-between px-6 py-4 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border-b border-gray-100 dark:border-slate-800">
+        <div class="text-2xl font-black tracking-tighter text-[#c5a059]">S A R A B</div>
+        <div class="flex items-center gap-5">
+            <button onclick="toggleDarkMode()" class="text-xl">🌓</button>
+            <div class="h-6 w-[1px] bg-gray-200"></div>
             <div class="relative cursor-pointer text-xl">🛒</div>
         </div>
     </nav>
 
-    <section class="relative overflow-hidden">
-        <div id="banner-slider">
-            </div>
-        <div id="slider-dots" class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10"></div>
-    </section>
-
-    <section id="story" class="px-6 py-20 bg-white dark:bg-slate-900 overflow-hidden">
-        <div class="max-w-4xl mx-auto text-center relative">
-            <span class="text-[#c5a059] font-bold tracking-widest text-sm mb-4 block">خلف كل حرف حكاية</span>
-            <h2 class="text-3xl md:text-5xl font-black mb-8 dark:text-white">أسطورة سراب</h2>
-            <p class="story-text text-xl text-gray-600 dark:text-gray-300 italic">
-                "يُحكى أن سراب لم تبدأ في المصانع، بل بدأت برؤيا في قلب الصحراء، حيث كان الضوء يراقص الرمال ليخلق وهماً من الجمال. استلهمنا من ذلك السحر أقلامنا؛ لتكون كالسّراب في جذب الأنظار، لكنها كالجبل في ثبات الجودة. صُممت أقلام سراب للرجل الذي لا يكتفي بالنجاح، بل يطمح لترك أثر لا يمحوه الزمن."
-            </p>
-            <div class="mt-10 flex justify-center gap-4">
-                <div class="w-12 h-[1px] bg-[#c5a059] self-center"></div>
-                <span class="text-sm font-bold uppercase tracking-widest text-[#c5a059]">Sarab Executive Pens</span>
-                <div class="w-12 h-[1px] bg-[#c5a059] self-center"></div>
+    <section class="hero-gradient h-[85vh] flex items-center justify-center text-center text-white px-4">
+        <div class="max-w-3xl">
+            <span class="inline-block px-4 py-1 border border-[#c5a059] text-[#c5a059] text-xs tracking-widest mb-6 rounded-full">EST. 2026</span>
+            <h2 class="text-5xl md:text-7xl font-black mb-6 amiri italic">حيثُ تنتهي الحكاية.. ويبدأ القلم</h2>
+            <p class="text-lg md:text-xl font-light opacity-90 mb-10 leading-relaxed">في "سراب" نؤمن أن القلم ليس مجرد أداة، بل هو امتداد لشخصيتك، وبصمة تتركها في سجل التاريخ.</p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="#store" class="bg-[#c5a059] hover:bg-[#a38445] text-white px-10 py-4 rounded-full font-bold transition-all shadow-xl">تسوق المجموعة</a>
+                <a href="#story" class="backdrop-blur-md bg-white/10 border border-white/20 hover:bg-white/20 px-10 py-4 rounded-full font-bold transition-all">اكتشف أسطورتنا</a>
             </div>
         </div>
     </section>
 
-    <section id="products" class="px-6 py-16 bg-gray-50 dark:bg-slate-800 transition-all">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex justify-between items-end mb-12">
-                <div>
-                    <h3 class="text-2xl font-black dark:text-white">مجموعة النخبة</h3>
-                    <p class="text-sm text-gray-500 mt-2">أقلام رجالية رسمية لإطلالة متكاملة</p>
-                </div>
-                <div class="flex gap-2">
-                    <button class="px-4 py-2 bg-white dark:bg-slate-700 rounded-lg text-xs font-bold shadow-sm">الكل</button>
-                    <button class="px-4 py-2 hover:bg-white dark:hover:bg-slate-700 rounded-lg text-xs font-bold transition-all">كلاسيك</button>
-                    <button class="px-4 py-2 hover:bg-white dark:hover:bg-slate-700 rounded-lg text-xs font-bold transition-all">حديث</button>
+    <section id="story" class="py-24 px-6">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16">
+            <div class="w-full md:w-1/2 relative">
+                <div class="absolute -top-4 -right-4 w-full h-full border-2 border-[#c5a059] rounded-2xl"></div>
+                <img src="https://images.unsplash.com/photo-1569012871812-f38ee64cd54c?q=80&w=800" class="relative rounded-2xl shadow-2xl z-10">
+            </div>
+            <div class="w-full md:w-1/2">
+                <h3 class="text-3xl font-black mb-6 amiri italic text-[#c5a059]">لماذا سراب؟</h3>
+                <p class="text-gray-600 dark:text-gray-400 leading-loose text-lg italic amiri">
+                    "السراب في الصحراء هو الجمال الذي تطارده العيون، ونحن في سراب نصنع الجمال الذي تستقر عليه الأيادي. اخترنا خاماتنا من أصلب المعادن وأندر الأخشاب، لتمتزج في قلم واحد يحكي قصة نجاحك في كل توقيع."
+                </p>
+                <div class="mt-8 flex gap-8">
+                    <div><span class="block text-2xl font-black text-[#c5a059]">+50</span><span class="text-xs text-gray-400">تصميم يدوي</span></div>
+                    <div><span class="block text-2xl font-black text-[#c5a059]">100%</span><span class="text-xs text-gray-400">ضمان دولي</span></div>
                 </div>
             </div>
-            
-            <div id="products-list" class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                </div>
         </div>
     </section>
 
-    <section class="px-6 py-20 bg-white dark:bg-slate-900">
-        <div class="max-w-6xl mx-auto text-center mb-12">
-            <h3 class="text-2xl font-black mb-2 dark:text-white">قالوا عن سراب</h3>
-            <div class="w-20 h-1 bg-[#c5a059] mx-auto"></div>
-        </div>
-        <div class="flex overflow-x-auto gap-6 no-scrollbar pb-4">
-            <div class="min-w-[300px] bg-gray-50 dark:bg-slate-800 p-8 rounded-2xl border border-gray-100 dark:border-slate-700">
-                <p class="text-gray-600 dark:text-gray-300 italic mb-6">"وصلني القلم في تغليف ملكي، التفاصيل في قلم 'السراب الأسود' مذهلة وتضيف هيبة للمكتب."</p>
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-[#c5a059] rounded-full flex items-center justify-center text-white font-bold">ع.م</div>
-                    <div class="text-right">
-                        <h4 class="text-sm font-bold dark:text-white">عبدالعزيز محمد</h4>
-                        <p class="text-[10px] text-gray-400">مدير تنفيذي</p>
+    <section id="store" class="py-20 bg-gray-50 dark:bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h3 class="text-3xl font-black mb-2">المجموعة المختارة</h3>
+                <div class="w-16 h-1 bg-[#c5a059] mx-auto"></div>
+            </div>
+
+            <div id="products-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div class="glass-card product-card group p-4 rounded-[2rem] transition-all hover:-translate-y-2 cursor-pointer" onclick="openModal('قلم الأبنوس المذهب', '350', 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?q=80&w=500')">
+                    <div class="relative overflow-hidden rounded-[1.5rem] mb-6 aspect-square">
+                        <img src="https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?q=80&w=500" class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="px-2">
+                        <h4 class="font-black text-lg mb-1">قلم الأبنوس المذهب</h4>
+                        <p class="text-[#c5a059] font-bold">350.00 ر.س</p>
+                    </div>
+                </div>
+
+                <div class="glass-card product-card group p-4 rounded-[2rem] transition-all hover:-translate-y-2 cursor-pointer" onclick="openModal('إصدار الفضة المصقولة', '420', 'https://images.unsplash.com/photo-1569012871812-f38ee64cd54c?q=80&w=500')">
+                    <div class="relative overflow-hidden rounded-[1.5rem] mb-6 aspect-square">
+                        <img src="https://images.unsplash.com/photo-1569012871812-f38ee64cd54c?q=80&w=500" class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="px-2">
+                        <h4 class="font-black text-lg mb-1">إصدار الفضة المصقولة</h4>
+                        <p class="text-[#c5a059] font-bold">420.00 ر.س</p>
+                    </div>
+                </div>
+
+                <div class="glass-card product-card group p-4 rounded-[2rem] transition-all hover:-translate-y-2 cursor-pointer" onclick="openModal('قلم سراب الكربوني', '290', 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=500')">
+                    <div class="relative overflow-hidden rounded-[1.5rem] mb-6 aspect-square">
+                        <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=500" class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="px-2">
+                        <h4 class="font-black text-lg mb-1">قلم سراب الكربوني</h4>
+                        <p class="text-[#c5a059] font-bold">290.00 ر.س</p>
                     </div>
                 </div>
             </div>
-            <div class="min-w-[300px] bg-gray-50 dark:bg-slate-800 p-8 rounded-2xl border border-gray-100 dark:border-slate-700">
-                <p class="text-gray-600 dark:text-gray-300 italic mb-6">"أفضل هدية قدمتها لنفسي. سلاسة الخط وشكل القلم الخشبي يعطي شعور بالفخامة التاريخية."</p>
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-[#c5a059] rounded-full flex items-center justify-center text-white font-bold">ف.س</div>
-                    <div class="text-right">
-                        <h4 class="text-sm font-bold dark:text-white">فهد السالم</h4>
-                        <p class="text-[10px] text-gray-400">مهندس معماري</p>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
-    <div id="paymentModal" class="fixed inset-0 z-[100] bg-black/80 items-end md:items-center justify-center backdrop-blur-sm p-0 md:p-4">
-        <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-t-[2rem] md:rounded-[2rem] overflow-hidden relative shadow-2xl">
-            <button onclick="closeModal()" class="absolute top-5 left-5 z-10 bg-black/10 p-2 rounded-full text-black hover:bg-black/20 transition-all">✕</button>
-            <div class="flex flex-col md:flex-row">
-                <div class="w-full md:w-1/2 bg-gray-100 dark:bg-slate-800 aspect-square">
-                    <img id="modalImg" src="" class="w-full h-full object-cover">
+    <div id="modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 p-4 backdrop-blur-md">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-4xl rounded-[2.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl">
+            <div class="w-full md:w-1/2 h-[300px] md:h-auto">
+                <img id="m-img" src="" class="w-full h-full object-cover">
+            </div>
+            <div class="w-full md:w-1/2 p-10 relative">
+                <button onclick="closeModal()" class="absolute top-6 left-6 text-gray-400 hover:text-black">✕</button>
+                <h3 id="m-title" class="text-3xl font-black mb-2"></h3>
+                <p id="m-price" class="text-2xl font-bold text-[#c5a059] mb-8"></p>
+                <div class="space-y-4 mb-8">
+                    <div class="flex items-center gap-3 text-sm"><span class="text-green-500">✔</span> حفر مجاني للإسم بالليزر</div>
+                    <div class="flex items-center gap-3 text-sm"><span class="text-green-500">✔</span> علبة جلدية فاخرة</div>
+                    <div class="flex items-center gap-3 text-sm"><span class="text-green-500">✔</span> ضمان لمدة عامين</div>
                 </div>
-                <div class="w-full md:w-1/2 p-8">
-                    <h2 id="modalProdName" class="text-2xl font-black mb-2 dark:text-white"></h2>
-                    <p class="text-xs text-[#c5a059] font-bold mb-4">إصدار حصري للنخبة</p>
-                    <div class="mb-6">
-                        <p class="text-3xl font-black text-gray-900 dark:text-[#c5a059]" id="modalPriceDisplay"></p>
-                    </div>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-6">
-                        صُنع هذا القلم بمزيج من التكنولوجيا الحديثة والحرفية اليدوية. يتميز بتوازن مثالي في اليد لضمان راحة تامة أثناء توقيع أهم قراراتك.
-                    </p>
-                    <input type="tel" id="phone" placeholder="رقم الجوال لتأكيد الطلب" class="w-full p-4 rounded-xl bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-slate-700 mb-4 outline-none focus:ring-2 focus:ring-[#c5a059]">
-                    <button onclick="alert('سيتم تحويلك لبوابة الدفع قريباً')" class="w-full btn-gold py-4 rounded-xl font-bold shadow-lg">اطلب الآن</button>
-                </div>
+                <input type="tel" id="tel" placeholder="رقم الواتساب الخاص بك" class="w-full p-4 bg-gray-50 dark:bg-slate-800 rounded-2xl mb-4 border-none outline-none focus:ring-2 focus:ring-[#c5a059]">
+                <button onclick="order()" class="w-full bg-[#c5a059] text-white py-4 rounded-2xl font-bold hover:scale-[1.02] transition-all shadow-lg shadow-[#c5a059]/20">تأكيد الطلب</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    <footer class="bg-black text-white py-12 px-8 text-center">
-        <h2 class="text-3xl font-black tracking-[0.5em] text-[#c5a059] mb-4">SARAB</h2>
-        <p class="text-gray-500 text-sm max-w-md mx-auto mb-8">نحن لا نبيع أقلاماً، نحن نبيع وسيلة لكتابة التاريخ.</p>
-        <div class="flex justify-center gap-6 text-xs font-bold tracking-widest text-gray-400">
-            <a href="#" class="hover:text-white transition-all">INSTAGRAM</a>
-            <a href="#" class="hover:text-white transition-all">TWITTER</a>
-            <a href="#" class="hover:text-white transition-all">WHATSAPP</a>
-        </div>
+    <footer class="py-16 px-6 bg-white dark:bg-slate-950 text-center border-t border-gray-100 dark:border-slate-900">
+        <h2 class="text-3xl font-black text-[#c5a059] mb-6">SARAB</h2>
+        <p class="text-gray-400 text-sm mb-10 tracking-widest uppercase italic">Mastery in every stroke</p>
+        <p class="text-xs text-gray-500">&copy; 2026 سراب - جميع الحقوق محفوظة</p>
     </footer>
 
     <script>
-        // --- البيانات ---
-        const banners = [
-            { image: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?q=80&w=2000', title: 'فخامة بلا حدود', subtitle: 'مجموعة سراب 2026 الرسمية' },
-            { image: 'https://images.unsplash.com/photo-1569012871812-f38ee64cd54c?q=80&w=2000', title: 'اكتب مستقبلك', subtitle: 'أقلام صُممت للقيادة' },
-            { image: 'https://images.unsplash.com/photo-1511376979163-f804dff7ad7b?q=80&w=2000', title: 'لمسة ملكية', subtitle: 'إصدارات خاصة من الذهب والفضة' }
-        ];
-
-        const products = [
-            { name: 'قلم سراب الكلاسيكي', price: 299, img: 'https://images.unsplash.com/photo-1511376979163-f804dff7ad7b?q=80&w=500' },
-            { name: 'إصدار الرمال الذهبي', price: 450, img: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?q=80&w=500' },
-            { name: 'قلم الفخامة الأسود', price: 320, img: 'https://images.unsplash.com/photo-1569012871812-f38ee64cd54c?q=80&w=500' },
-            { name: 'قلم التوقيع الرصاصي', price: 280, img: 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=500' }
-        ];
-
-        // --- إدارة السلايدر ---
-        let currentSlide = 0;
-        const slider = document.getElementById('banner-slider');
-        const dotsContainer = document.getElementById('slider-dots');
-
-        function initSlider() {
-            slider.innerHTML = banners.map(b => `
-                <div class="banner-slide">
-                    <img src="${b.image}">
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
-                        <span class="text-[#c5a059] font-bold tracking-[0.3em] mb-4 text-sm md:text-base">${b.subtitle}</span>
-                        <h2 class="text-4xl md:text-7xl font-black mb-6 uppercase tracking-tight">${b.title}</h2>
-                        <button class="btn-gold px-10 py-4 rounded-full font-bold text-sm">اكتشف المجموعة</button>
-                    </div>
-                </div>
-            `).join('');
-            dotsContainer.innerHTML = banners.map((_, i) => `<div onclick="goToSlide(${i})" class="dot-item bg-white/30 cursor-pointer"></div>`).join('');
-            updateSlider();
-        }
-
-        function updateSlider() {
-            slider.style.transform = `translateX(${currentSlide * 100}%)`;
-            document.querySelectorAll('.dot-item').forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
-        }
-        function goToSlide(index) { currentSlide = index; updateSlider(); }
-        setInterval(() => { currentSlide = (currentSlide + 1) % banners.length; updateSlider(); }, 5000);
-
-        // --- عرض المنتجات ---
-        function renderProducts() {
-            const container = document.getElementById('products-list');
-            container.innerHTML = products.map(p => `
-                <div class="product-card bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-700 rounded-3xl overflow-hidden cursor-pointer hover:shadow-2xl transition-all group" 
-                     onclick="openModal('${p.name}', '${p.price}', '${p.img}')">
-                    <div class="aspect-square overflow-hidden bg-gray-50 relative">
-                        <img src="${p.img}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                        <div class="absolute top-4 right-4 bg-white/90 px-3 py-1 rounded-full text-[10px] font-bold dark:text-black">جديد</div>
-                    </div>
-                    <div class="p-6">
-                        <h5 class="text-sm font-black mb-1 dark:text-gray-100">${p.name}</h5>
-                        <p class="text-[#c5a059] font-black text-lg">${p.price} SAR</p>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // --- التحكم بالنافذة ---
-        function openModal(name, price, img) {
-            document.getElementById('modalProdName').innerText = name;
-            document.getElementById('modalPriceDisplay').innerText = price + " SAR";
-            document.getElementById('modalImg').src = img;
-            document.getElementById('paymentModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            document.getElementById('paymentModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // --- الوضع الداكن ---
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            const isDark = document.body.classList.contains('dark-mode');
-            document.getElementById('darkModeBtn').innerText = isDark ? '☀️' : '🌙';
-        }
-
-        // --- بدء التشغيل ---
+        // إغلاق شاشة التحميل بعد ثانية واحدة لضمان عدم بقائها بيضاء
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('loader').style.opacity = '0';
@@ -272,10 +156,29 @@
             }, 1000);
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initSlider();
-            renderProducts();
-        });
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function openModal(title, price, img) {
+            document.getElementById('m-title').innerText = title;
+            document.getElementById('m-price').innerText = price + " ر.س";
+            document.getElementById('m-img').src = img;
+            document.getElementById('modal').classList.replace('hidden', 'flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.replace('flex', 'hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function order() {
+            const phone = document.getElementById('tel').value;
+            if(!phone) return alert('لطفاً أدخل رقم الجوال');
+            alert('شكراً لثقتك بـ سراب. سيتم التواصل معك عبر واتساب لتأكيد النقش على القلم.');
+            closeModal();
+        }
     </script>
 </body>
 </html>
